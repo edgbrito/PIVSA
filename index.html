@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Ambiental - Plataforma ENDLESSGREEN</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-9usAa10IRO0HhonpyAIVpjrylPvoDwiPUiKdWk5t3PyolY1cOd4DSE0Ga+ri4AuTroPR5aQvXU9xC6qOPnzFeg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <header class="main-header">
+    <h1 id="header-title">Diagnóstico Ambiental - Plataforma PIVSA - ENDLESSGREEN</h1>
+    <p>Pagamentos por Serviços Ambientais (PSA)</p>
+  </header>
+
+  <section id="login-section" class="login-container">
+    <h2>Acessar Plataforma</h2>
+    <form id="login-form" class="login-form">
+      <div class="form-group">
+          <label for="emailInput" class="sr-only">Email</label> <input type="email" id="emailInput" placeholder="Digite seu email" required> </div>
+      <div class="form-group">
+          <label for="passwordInput" class="sr-only">Senha</label>
+          <input type="password" id="passwordInput" placeholder="Digite sua senha" required>
+      </div>
+      <button id="loginButton" type="submit">Entrar</button>
+      <p id="login-error" class="error-message" style="display: none;"></p> <p id="login-loading" class="loading-message" style="display: none;"></p> <p class="register-link">Ainda não tem conta? <a href="#">Registre-se</a></p>
+    </form>
+  </section>
+
+  <main id="main-content" style="display:none;">
+
+    <nav class="tab-navigation" role="tablist">
+       <button id="btn-resumoTab" role="tab" aria-selected="true" aria-controls="resumoTab" class="tab-button active">
+        <i class="fas fa-tachometer-alt"></i> Resumo
+      </button>
+      <button id="btn-mapTab" role="tab" aria-selected="false" aria-controls="mapTab" class="tab-button">
+        <i class="fas fa-map-marked-alt"></i> Mapa e Detalhes
+      </button>
+      <button id="btn-vegetacaoTab" role="tab" aria-selected="false" aria-controls="vegetacaoTab" class="tab-button">
+        <i class="fas fa-tree"></i> Vegetação e Conect.
+      </button>
+      <button id="btn-carbonoTab" role="tab" aria-selected="false" aria-controls="carbonoTab" class="tab-button">
+        <i class="fas fa-smog"></i> Carbono
+      </button>
+      <button id="btn-hidricoTab" role="tab" aria-selected="false" aria-controls="hidricoTab" class="tab-button">
+        <i class="fas fa-water"></i> Hídrico
+      </button>
+      <button id="btn-climaTab" role="tab" aria-selected="false" aria-controls="climaTab" class="tab-button">
+        <i class="fas fa-cloud-sun-rain"></i> Clima
+      </button>
+      <button id="btn-valoracaoTab" role="tab" aria-selected="false" aria-controls="valoracaoTab" class="tab-button">
+        <i class="fas fa-dollar-sign"></i> Valoração Econ.
+      </button>
+      <button id="btn-socialTab" role="tab" aria-selected="false" aria-controls="socialTab" class="tab-button">
+        <i class="fas fa-users"></i> Contexto Social
+      </button>
+    </nav>
+
+    <div class="tab-content-wrapper">
+
+      <section id="resumoTab" role="tabpanel" aria-labelledby="btn-resumoTab" class="tab-content active">
+          <div class="card"> <h2><i class="fas fa-tachometer-alt"></i> Resumo da Propriedade: <span id="resumo-prop-nome"></span></h2>
+              <div class="kpi-grid">
+                  <div class="kpi-card">
+                      <div class="kpi-icon"><i class="fas fa-vector-square"></i></div>
+                      <div class="kpi-value" id="kpi-area-total">--</div> <div class="kpi-label">Área Total (ha)</div>
+                  </div>
+                  <div class="kpi-card">
+                      <div class="kpi-icon"><i class="fas fa-leaf"></i></div>
+                      <div class="kpi-value" id="kpi-veg-densa-perc">-- %</div> <div class="kpi-label">Vegetação Densa</div>
+                  </div>
+                   <div class="kpi-card">
+                      <div class="kpi-icon"><i class="fas fa-shield-alt"></i></div>
+                      <div class="kpi-value" id="kpi-app-perc">-- %</div> <div class="kpi-label">APP (% da Área)</div>
+                  </div>
+                   <div class="kpi-card">
+                      <div class="kpi-icon"><i class="fas fa-landmark"></i></div>
+                      <div class="kpi-value" id="kpi-rl-perc">-- %</div> <div class="kpi-label">Reserva Legal (% da Área)</div>
+                  </div>
+                  <div class="kpi-card">
+                      <div class="kpi-icon"><i class="fas fa-seedling"></i></div>
+                      <div class="kpi-value" id="kpi-carbono-total">-- t</div> <div class="kpi-label">Carbono Retido Total</div>
+                  </div>
+                   <div class="kpi-card">
+                      <div class="kpi-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                      <div class="kpi-value" id="kpi-valor-ambiental">R$ --</div> <div class="kpi-label">Valoração Ambiental (Carbono)</div>
+                  </div>
+              </div> </div> </section>
+
+      <section id="mapTab" role="tabpanel" aria-labelledby="btn-mapTab" class="tab-content">
+        <div class="card">
+          <h2><i class="fas fa-map-marked-alt"></i> Mapa e Detalhes da Propriedade</h2>
+           <div class="grid-details">
+              <div>
+                  <div class="file-upload-container">
+                    <label for="fileInput">Carregar GeoJSON (com tipo='PROPRIEDADE'/'APP'/'RL'):</label>
+                    <input type="file" id="fileInput" accept=".geojson, application/geo+json">
+                    <span id="file-feedback" class="file-feedback-message"></span> </div>
+                  <div id="map"></div>
+              </div>
+              <div id="map-details-column">
+                  <h3>Informações Gerais</h3>
+                  <ul class="details-list" id="info-gerais-list">
+                       <li><span class="detail-label">CAR ID:</span> <span id="info-car-id">--</span></li>
+                      <li><span class="detail-label">Município/UF:</span> <span id="info-municipio-uf">--</span></li>
+                      <li><span class="detail-label">Área (ha):</span> <span id="info-area">--</span></li>
+                      <li><span class="detail-label">Perímetro (m):</span> <span id="info-perimetro">--</span></li>
+                      <li><span class="detail-label">Centroide:</span> <span id="info-centroide">--</span></li>
+                      <li><span class="detail-label">SRC Original:</span> <span id="info-src-original">--</span></li>
+                      <li><span class="detail-label">SRC Cálculos:</span> <span id="info-src-calculos">--</span></li>
+                  </ul>
+                  <h3 class="mt-4">Solos</h3>
+                   <ul class="details-list" id="info-solos-list"></ul> <h3 class="mt-4">Bioma e Fitofisionomia</h3>
+                   <ul class="details-list" id="info-bioma-list"></ul> <h3 class="mt-4">APP e RL</h3>
+                    <ul class="details-list">
+                        <li><span class="detail-label">Área APP (ha):</span> <span id="info-app-area">--</span> (<span id="info-app-perc-detalhe">--</span>%)</li>
+                        <li><span class="detail-label">Perímetro APP (m):</span> <span id="info-app-perimetro">--</span></li>
+                         <li><span class="detail-label">Área RL (ha):</span> <span id="info-rl-area">--</span> (<span id="info-rl-perc-detalhe">--</span>%)</li>
+                        <li><span class="detail-label">Perímetro RL (m):</span> <span id="info-rl-perimetro">--</span></li>
+                        <li><span class="detail-label">Área Útil (ha):</span> <span id="info-area-util">--</span></li>
+                   </ul>
+              </div> </div> </div> </section>
+
+       <section id="vegetacaoTab" role="tabpanel" aria-labelledby="btn-vegetacaoTab" class="tab-content">
+         <div class="card">
+           <h2><i class="fas fa-tree"></i> Análise da Vegetação e Conectividade</h2>
+            <div class="grid-details">
+                <div>
+                   <p>Distribuição percentual e área (ha) das classes de uso do solo (Baseado em APP/RL/Área Útil).</p>
+                   <div class="chart-container dual-chart">
+                      <div>
+                          <h3>Distribuição Percentual</h3>
+                          <canvas id="vegetacaoChart"></canvas>
+                       </div>
+                        <div>
+                          <h3>Área por Classe (ha)</h3>
+                          <canvas id="barrasVegetacaoChart"></canvas>
+                       </div>
+                   </div>
+                </div>
+                <div>
+                    <h3>Cobertura na Propriedade</h3>
+                     <ul class="details-list">
+                        <li><span class="detail-label">Vegetação Densa:</span> <span id="veg-prop-densa-perc">--</span>% (<span id="veg-prop-densa-area">--</span> m²)</li>
+                        <li><span class="detail-label">Sem Vegetação Densa:</span> <span id="veg-prop-sem-densa-perc">--</span>% (<span id="veg-prop-sem-densa-area">--</span> m²)</li>
+                        <li><span class="detail-label">Fragmentos c/ Veg. Densa:</span> <span id="veg-prop-fragmentos">--</span></li>
+                    </ul>
+                     <h3 class="mt-4">Cobertura em Áreas Protegidas</h3>
+                      <ul class="details-list">
+                        <li><span class="detail-label">Veg. Densa na APP (IVAPP):</span> <span id="veg-app-densa-perc">--</span>%</li>
+                        <li><span class="detail-label">Veg. Densa na RL (IVRL):</span> <span id="veg-rl-densa-perc">--</span>%</li>
+                     </ul>
+                     <h3 class="mt-4">Conectividade Ecológica (Regional)</h3>
+                     <ul class="details-list">
+                         <li><span class="detail-label">ICVD por Blocos:</span> <span id="conect-icvd-blocos">--</span>%</li>
+                         <li><span class="detail-label">ICVD por Área:</span> <span id="conect-icvd-area">--</span>%</li>
+                         <li><span class="detail-label">ICVD_2 por Área:</span> <span id="conect-icvd2-area">--</span>%</li>
+                         <li><span class="detail-label">Qtd. Polígonos Veg. (>200m²):</span> <span id="conect-polig-veg">--</span></li>
+                         <li><span class="detail-label">Qtd. Polígonos Sem Veg. (>200m²):</span> <span id="conect-polig-sem-veg">--</span></li>
+                     </ul>
+                     <div id="conect-raios-table" class="mt-3 simple-table-container"></div>
+                </div> </div> </div> </section>
+
+        <section id="carbonoTab" role="tabpanel" aria-labelledby="btn-carbonoTab" class="tab-content">
+        <div class="card">
+          <h2><i class="fas fa-smog"></i> Estimativa de Carbono</h2>
+           <p>Estimativa do estoque de carbono na propriedade (toneladas).</p>
+            <div class="grid-details">
+                <div>
+                     <div class="chart-container">
+                        <canvas id="carbonoChart"></canvas>
+                     </div>
+                </div>
+                <div>
+                     <h3>Estoque Total (toneladas)</h3>
+                     <ul class="details-list">
+                        <li><span class="detail-label">Total Vegetação:</span> <span id="carb-veg-total">--</span> t</li>
+                        <li><span class="detail-label">Total Solo:</span> <span id="carb-solo-total">--</span> t</li>
+                        <li><span class="detail-label">**Geral:**</span> <span id="carb-geral-total">--</span> t</li>
+                        <li><span class="detail-label">Incremento Anual Estimado (Vegetação):</span> <span id="carb-incremento">--</span> t/ha/ano</li>
+                    </ul>
+                    <h3 class="mt-4">Detalhamento por Área (toneladas)</h3>
+                     <ul class="details-list">
+                         <li><span class="detail-label">APP (Vegetação):</span> <span id="carb-veg-app">--</span></li>
+                         <li><span class="detail-label">APP (Solo):</span> <span id="carb-solo-app">--</span></li>
+                         <li><span class="detail-label">RL (Vegetação):</span> <span id="carb-veg-rl">--</span></li>
+                         <li><span class="detail-label">RL (Solo):</span> <span id="carb-solo-rl">--</span></li>
+                          <li><span class="detail-label">Restante (Vegetação):</span> <span id="carb-veg-restante">--</span></li>
+                         <li><span class="detail-label">Restante (Solo):</span> <span id="carb-solo-restante">--</span></li>
+                    </ul>
+                     <h3 class="mt-4">Detalhamento por Tipo (toneladas/ha)</h3>
+                      <div id="carb-por-tipo-list"></div>
+                </div> </div> </div> </section>
+
+        <section id="hidricoTab" role="tabpanel" aria-labelledby="btn-hidricoTab" class="tab-content">
+        <div class="card">
+          <h2><i class="fas fa-water"></i> Recursos Hídricos</h2>
+           <p>Quantitativo de nascentes, cursos d'água e contexto hidrográfico.</p>
+           <div class="grid-details">
+                <div>
+                    <div class="chart-container">
+                        <canvas id="hidricoChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                     <h3>Na Propriedade</h3>
+                     <ul class="details-list">
+                        <li><span class="detail-label">Nascentes:</span> <span id="hidrico-nascentes">--</span></li>
+                        <li><span class="detail-label">Componentes Hídricos Totais:</span> <span id="hidrico-componentes-total">--</span></li>
+                        <li><span class="detail-label">Componentes em APP:</span> <span id="hidrico-componentes-app">--</span> (<span id="hidrico-componentes-app-perc">--</span>%)</li>
+                        <li><span class="detail-label">Tipos de APP Hídrica Predominantes:</span> <span id="hidrico-tipos-app">--</span></li>
+                     </ul>
+                     <h3 class="mt-4">Contexto Hidrográfico</h3>
+                      <ul class="details-list">
+                        <li><span class="detail-label">Microbacia:</span> <span id="hidrico-microbacia">--</span></li>
+                        <li><span class="detail-label">Mesobacia:</span> <span id="hidrico-mesobacia">--</span></li>
+                        <li><span class="detail-label">Macrobacia:</span> <span id="hidrico-macrobacia">--</span></li>
+                     </ul>
+                      <h3 class="mt-4">Proximidade</h3>
+                     <ul class="details-list">
+                        <li><span class="detail-label">Rio Mais Próximo:</span> <span id="hidrico-rio-prox-nome">--</span> (<span id="hidrico-rio-prox-dist">--</span> m)</li>
+                         <li><span class="detail-label">Rios Cruzados (Buffer 10km):</span> <span id="hidrico-rios-buffer">--</span></li>
+                     </ul>
+                </div> </div> </div> </section>
+
+        <section id="climaTab" role="tabpanel" aria-labelledby="btn-climaTab" class="tab-content">
+        <div class="card">
+           <h2><i class="fas fa-cloud-sun-rain"></i> Dados Climáticos (<span id="clima-ano">--</span>)</h2>
+           <p>Dados médios ou totais para o período.</p>
+            <div class="grid-details">
+                <div class="chart-container">
+                    <canvas id="climaChart"></canvas>
+                </div>
+                <div class="kpi-grid clima-grid">
+                    <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-cloud-showers-heavy"></i></div> <div class="kpi-value clima-value" id="clima-precipitacao">--</div> <div class="kpi-label clima-label">Precipitação Anual (mm)</div> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-temperature-high"></i></div> <div class="kpi-value clima-value" id="clima-temp-media">-- °C</div> <div class="kpi-label clima-label">Temp. Média</div> <span class="clima-extra">(Max: <span id="clima-temp-max">--</span>° / Min: <span id="clima-temp-min">--</span>°)</span> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-sun"></i></div> <div class="kpi-value clima-value" id="clima-radiacao">--</div> <div class="kpi-label clima-label">Radiação Solar (kWh/m²/dia)</div> <span class="clima-extra">(Difusa: <span id="clima-radiacao-difusa">--</span>)</span> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-tint"></i></div> <div class="kpi-value clima-value" id="clima-umidade-rel">-- %</div> <div class="kpi-label clima-label">Umidade Relativa</div> <span class="clima-extra">(Espec: <span id="clima-umidade-esp">--</span> g/kg)</span> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-wind"></i></div> <div class="kpi-value clima-value" id="clima-vento-10m">-- m/s</div> <div class="kpi-label clima-label">Vento (10m)</div> <span class="clima-extra">(Dir: <span id="clima-vento-10m-dir">--</span>°)</span> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-mountain"></i></div> <div class="kpi-value clima-value" id="clima-altitude">-- m</div> <div class="kpi-label clima-label">Altitude Média</div> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-water"></i></div> <div class="kpi-value clima-value" id="clima-evapo">--</div> <div class="kpi-label clima-label">Evapotranspiração (mm/dia)</div> </div>
+                     <div class="kpi-card clima-card"> <div class="kpi-icon clima-icon"><i class="fas fa-thermometer-half"></i></div> <div class="kpi-value clima-value" id="clima-temp-superficie">-- °C</div> <div class="kpi-label clima-label">Temp. Superfície</div> </div>
+                </div> </div> </div> </section>
+
+        <section id="valoracaoTab" role="tabpanel" aria-labelledby="btn-valoracaoTab" class="tab-content">
+        <div class="card">
+           <h2><i class="fas fa-dollar-sign"></i> Valoração Econômica</h2>
+           <p>Estimativas de valores econômicos associados aos serviços ambientais, principalmente carbono.</p>
+           <div class="grid-details">
+                <div>
+                    <div class="chart-container">
+                         <canvas id="valoracaoChart"></canvas>
+                    </div>
+                </div>
+                <div>
+                    <h3>Valoração Baseada em Carbono (Estimativa Anual)</h3>
+                    <ul class="details-list">
+                        <li><span class="detail-label">Valor Carbono Vegetação Total:</span> R$ <span id="val-carb-veg-total">--</span></li>
+                        <li><span class="detail-label">Valor Carbono Solo Total:</span> R$ <span id="val-carb-solo-total">--</span></li>
+                        <li><span class="detail-label">**Valor Ambiental Total (Carbono):**</span> R$ <span id="val-carb-geral-total">--</span></li>
+                         <li><span class="detail-label">Valor / Tonelada Usado (Mercado):</span> R$ <span id="val-preco-tonelada">--</span></li>
+                    </ul>
+                    <h3 class="mt-4">Detalhamento por Área (Valor Carbono R$)</h3>
+                     <ul class="details-list">
+                         <li><span class="detail-label">APP (Vegetação + Solo):</span> R$ <span id="val-carb-app">--</span></li>
+                         <li><span class="detail-label">RL (Vegetação + Solo):</span> R$ <span id="val-carb-rl">--</span></li>
+                         <li><span class="detail-label">Restante (Vegetação + Solo):</span> R$ <span id="val-carb-restante">--</span></li>
+                    </ul>
+                    <h3 class="mt-4">Estimativa de Valor e Lucro da Propriedade</h3>
+                     <ul class="details-list">
+                         <li><span class="detail-label">Valor Estimado da Terra (Total):</span> R$ <span id="val-prop-terra">--</span> (Base: R$ <span id="val-prop-terra-ha">--</span>/ha)</li>
+                         <li><span class="detail-label">Lucro Anual Estimado (Atividade):</span> R$ <span id="val-prop-lucro">--</span> (Base: R$ <span id="val-prop-lucro-ha">--</span>/ha/ano)</li>
+                    </ul>
+                </div> </div> </div> </section>
+
+        <section id="socialTab" role="tabpanel" aria-labelledby="btn-socialTab" class="tab-content">
+        <div class="card">
+          <h2><i class="fas fa-users"></i> Contexto Social</h2>
+           <p>Proximidade da propriedade com áreas de interesse social e ambiental.</p>
+           <div id="social-context-container">
+               <div class="social-category">
+                   <h3><i class="fas fa-landmark"></i> Áreas de Conservação Próximas</h3>
+                   <ul class="details-list social-list" id="social-conservacao"></ul> </div>
+               <div class="social-category">
+                   <h3><i class="fas fa-feather-alt"></i> Terras Indígenas Próximas</h3>
+                   <ul class="details-list social-list" id="social-indigenas"></ul> </div>
+               <div class="social-category">
+                   <h3><i class="fas fa-users"></i> Territórios Quilombolas Próximos</h3>
+                   <ul class="details-list social-list" id="social-quilombolas"></ul> </div>
+               <div class="social-category">
+                   <h3><i class="fas fa-map-marker-alt"></i> Assentamentos Próximos</h3>
+                   <ul class="details-list social-list" id="social-assentamentos"></ul> </div>
+           </div> </div> </section>
+
+    </div> </main>
+
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <script src="auth.js" defer></script>
+  <script src="script.js" defer></script>
+  </body>
+</html>
