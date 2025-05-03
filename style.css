@@ -1,0 +1,552 @@
+/* === Reset / Base Styles === */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f7f6;
+  color: #333;
+  line-height: 1.6;
+}
+
+/* === Header === */
+.main-header {
+  background-color: #2e7d32;
+  color: white;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.main-header h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.8rem;
+}
+
+.main-header p {
+  margin: 0;
+  font-size: 1rem;
+  opacity: 0.9;
+}
+
+
+
+/* === Login Section === */
+.login-container {
+  max-width: 450px; /* Um pouco mais estreito pode ficar melhor */
+  margin: 3rem auto;
+  padding: 2.5rem; /* Um pouco mais de padding */
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1); /* Sombra um pouco mais pronunciada */
+  text-align: center;
+}
+
+
+.login-container h2 {
+  margin-bottom: 1.5rem;
+  color: #2e7d32;
+  font-weight: 600; /* Título um pouco mais forte */
+}
+
+
+
+/* --- ESTILOS MELHORADOS PARA OS INPUTS --- */
+
+/* Seleciona os inputs de email e senha dentro do form de login */
+
+.login-form input[type="email"],
+.login-form input[type="password"] {
+  display: block;
+  width: 100%; /* Ocupa toda a largura do container */
+  padding: 12px 15px; /* Mais padding interno (vertical, horizontal) */
+  margin-bottom: 1rem; /* Espaço abaixo de cada input */
+  border: 1px solid #ced4da; /* Borda cinza mais clara */
+  border-radius: 6px; /* Cantos mais arredondados */
+  font-size: 1rem; /* Tamanho de fonte padrão */
+  color: #495057; /* Cor do texto digitado */
+  background-color: #fff;
+  background-clip: padding-box;
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Transição suave */
+  appearance: none; /* Remove estilos padrão do OS/Navegador */
+  line-height: 1.5; /* Altura da linha */
+}
+
+/* Estilo para o placeholder (texto dentro do input antes de digitar) */
+.login-form input[type="email"]::placeholder,
+.login-form input[type="password"]::placeholder {
+  color: #adb5bd; /* Cor do placeholder mais suave */
+  opacity: 1; /* Garante visibilidade */
+}
+
+/* Estilo quando o input está em foco (selecionado) */
+.login-form input[type="email"]:focus,
+.login-form input[type="password"]:focus {
+  color: #495057;
+  background-color: #fff;
+  border-color: #80bdff; /* Borda azul clara (padrão Bootstrap) */
+  /* Ou use a cor primária verde: border-color: #6cc070; */
+  outline: 0; /* Remove o contorno padrão do navegador */
+  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25); /* Sombra suave azul ao focar */
+  /* Ou sombra verde: box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.25); */
+}
+
+/* --- Fim dos Estilos Melhorados --- */
+
+
+.login-form button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 12px 25px; /* Padding ajustado */
+  border-radius: 6px; /* Consistente com inputs */
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  width: 100%; /* Botão ocupa largura total */
+  margin-top: 0.5rem; /* Espaço acima do botão */
+}
+
+.login-form button:hover {
+  background-color: #388e3c;
+}
+.login-form button:active {
+    transform: scale(0.98); /* Efeito de clique */
+}
+
+
+
+.error-message {
+  color: #d32f2f;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.loading-message {
+  color: #555;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+/* Estilo para o link de registro */
+.register-link {
+    margin-top: 1.5rem;
+    font-size: 0.9rem;
+    color: #6c757d;
+}
+.register-link a {
+    color: #2e7d32;
+    text-decoration: none;
+    font-weight: 600;
+}
+.register-link a:hover {
+    text-decoration: underline;
+}
+
+
+/* Fim da correção de 29/04/25 */
+
+
+
+
+/* === Main Content & Tabs === */
+main {
+  padding: 1rem;
+}
+
+.tab-navigation {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  background: #e8f5e9;
+  padding: 0.5rem;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.tab-button {
+  background: transparent;
+  color: #388e3c;
+  border: none;
+  margin: 5px;
+  padding: 0.8rem 1.2rem;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.tab-button:hover {
+  background-color: #c8e6c9;
+  color: #1b5e20;
+}
+
+.tab-button.active {
+  background-color: #4caf50;
+  color: white;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.tab-button i {
+  font-size: 1.1em;
+}
+
+.tab-content-wrapper {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tab-content {
+  display: none;
+}
+
+.tab-content.active {
+  display: block;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* === Card Style === */
+.card {
+  background: white;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.card h2 {
+  margin-top: 0;
+  margin-bottom: 1.5rem; /* More space after h2 */
+  color: #2e7d32;
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-bottom: 1px solid #eee; /* Add a separator */
+  padding-bottom: 0.8rem; /* Space for the separator */
+}
+.card h2 i {
+  font-size: 0.9em;
+}
+.card h2 span { /* Styling for dynamic property name */
+    color: #555;
+    font-weight: normal;
+}
+
+
+.card h3 { /* Styling for sub-sections */
+    margin-top: 1.5rem;
+    margin-bottom: 0.8rem;
+    color: #1b5e20;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-bottom: 1px dashed #e0e0e0;
+    padding-bottom: 0.3rem;
+}
+.card h3:first-of-type {
+    margin-top: 0; /* No top margin for the first h3 in a section */
+}
+
+.card p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #555;
+  font-size: 0.95rem;
+}
+
+/* === KPI Grid (Resumo Tab) === */
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.kpi-card {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    text-align: center;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
+}
+
+.kpi-icon {
+    font-size: 1.8rem;
+    color: #4caf50;
+    margin-bottom: 0.5rem;
+}
+
+.kpi-value {
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #333;
+    line-height: 1.2;
+}
+
+.kpi-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+    margin-top: 0.3rem;
+}
+
+/* === Grid for Details (e.g., Map + Info) === */
+.grid-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Flexible columns */
+    gap: 2.5rem; /* More gap */
+}
+
+/* === Details List Styling === */
+.details-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+.details-list li {
+    padding: 0.4rem 0;
+    border-bottom: 1px solid #f1f1f1;
+    display: flex;
+    justify-content: space-between; /* Align label and value */
+    flex-wrap: wrap; /* Allow wrapping if needed */
+    gap: 0.5rem;
+}
+.details-list li:last-child {
+    border-bottom: none;
+}
+.details-list .detail-label {
+    font-weight: 600;
+    color: #444;
+    /* flex-basis: 150px; /* Adjust as needed */
+    /* flex-shrink: 0; */
+}
+.details-list span:not(.detail-label) { /* Value part */
+    color: #555;
+    text-align: right;
+     flex-grow: 1;
+}
+.details-list span#info-centroide,
+.details-list span#hidrico-tipos-app { /* Allow specific long values to wrap */
+    text-align: left;
+     word-break: break-word;
+}
+
+
+/* === Map Specific Styles === */
+#map {
+  height: 450px;
+  width: 100%;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  margin-top: 1rem;
+}
+
+.file-upload-container {
+  margin-bottom: 1rem;
+}
+
+.file-upload-container label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+  color: #333;
+}
+
+.file-upload-container input[type="file"] {
+  border: 1px solid #ccc;
+  padding: 0.5rem;
+  border-radius: 4px;
+}
+
+.file-feedback-message {
+  display: inline-block;
+  margin-left: 1rem;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* === Chart Container Styles === */
+.chart-container {
+  margin-top: 1.5rem;
+  max-width: 100%;
+  position: relative; /* Adicionado para controle de altura do canvas */
+}
+
+.chart-container.dual-chart {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Mantém responsivo */
+  gap: 2rem;
+  align-items: start; /* Alinha ao topo */
+}
+
+
+/* NOVO: Limitar a altura dos contêineres diretos dos gráficos de vegetação */
+.chart-container.dual-chart > div {
+  position: relative; /* Necessário para o Chart.js calcular o tamanho corretamente */
+  /* Defina uma altura máxima razoável. Ajuste conforme necessário */
+  max-height: 350px;
+  /* Você também pode definir uma altura fixa se preferir, mas max-height é mais flexível */
+  /* height: 300px; */
+}
+
+
+.chart-container canvas {
+  max-width: 100%;
+  /* A altura será controlada pelo Chart.js dentro do contêiner com max-height */
+  height: auto;
+}
+
+.chart-container h3 {
+    text-align: center;
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 0.5rem;
+    font-weight: normal;
+}
+
+
+/* ... (restante dos estilos) ... */
+
+/* Adicionar esta regra para garantir que o canvas respeite a altura do seu contêiner pai limitado */
+/* Isto pode ou não ser necessário dependendo de como o Chart.js interage com o CSS exato, mas é uma boa garantia */
+canvas {
+    max-height: 100%;
+}
+
+
+/* === Responsive Adjustments === */
+@media (max-width: 992px) {
+    .grid-details {
+        grid-template-columns: 1fr; /* Stack columns on medium screens */
+        gap: 2rem;
+    }
+     /* .chart-container.dual-chart {
+        grid-template-columns: 1fr; /* Comentado para manter lado a lado se possível */
+     /* } */
+
+     /* Ajustar max-height em telas menores se necessário */
+     .chart-container.dual-chart > div {
+        max-height: 300px; /* Um pouco menor em telas médias/pequenas */
+     }
+}
+
+/* ... (outros ajustes responsivos) ... */
+
+
+
+
+/* --- Clima Specific Grid/Cards --- */
+.kpi-grid.clima-grid {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 1rem; /* Smaller gap for more cards */
+}
+.kpi-card.clima-card {
+     padding: 0.8rem 1rem;
+     background-color: #fff; /* Lighter cards */
+}
+.kpi-icon.clima-icon { font-size: 1.5rem; margin-bottom: 0.3rem; color: #2e7d32; }
+.kpi-value.clima-value { font-size: 1.3rem; }
+.kpi-label.clima-label { font-size: 0.8rem; }
+.clima-extra {
+    font-size: 0.75rem;
+    color: #777;
+    display: block;
+    margin-top: 2px;
+}
+
+/* --- Social Context Section --- */
+#social-context-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+}
+.social-category h3 {
+    font-size: 1.2rem;
+    color: #1b5e20;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.social-list li {
+     border-bottom: 1px dotted #ddd;
+     padding: 0.6rem 0;
+     line-height: 1.4;
+     display: block; /* Override flex for more text space */
+}
+.social-list li span {
+     display: block; /* Stack info */
+     text-align: left; /* Reset alignment */
+}
+.social-list .detail-label {
+     font-weight: 600;
+     color: #333;
+}
+.social-list .social-details {
+     font-size: 0.85rem;
+     color: #666;
+     margin-top: 0.2rem;
+}
+
+
+/* === Accessibility === */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* === Responsive Adjustments === */
+@media (max-width: 992px) {
+    .grid-details {
+        grid-template-columns: 1fr; /* Stack columns on medium screens */
+        gap: 2rem;
+    }
+     .chart-container.dual-chart {
+        grid-template-columns: 1fr; /* Stack dual charts */
+    }
+}
+
+@media (max-width: 768px) {
+  .main-header h1 { font-size: 1.5rem; }
+  .tab-navigation { justify-content: flex-start; overflow-x: auto; }
+  .card { padding: 1rem 1.5rem; }
+  .card h2 { font-size: 1.3rem; }
+  .kpi-grid { grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; }
+  .kpi-value { font-size: 1.4rem; }
+  .kpi-label { font-size: 0.8rem; }
+}
+
+@media (max-width: 480px) {
+   .login-container { margin: 1.5rem auto; padding: 1.5rem; }
+   .tab-button { padding: 0.6rem 1rem; font-size: 0.9rem; }
+   #map { height: 350px; }
+   .card { padding: 1rem; }
+   .card h2 { font-size: 1.2rem; }
+    .kpi-grid { grid-template-columns: 1fr 1fr; } /* Ensure 2 columns min */
+    #social-context-container { grid-template-columns: 1fr; }
+}
